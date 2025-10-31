@@ -98,3 +98,14 @@ tasks:
   default:
     deps:
       - site
+
+  # Combined development task
+  dev:
+    desc: Run all watchers in parallel
+    cmds:
+      - |
+        sqlc generate
+        go tool templ generate --watch &
+        {{.tailwind_bin}} -i ./public/input.css -o ./public/style.css --watch &
+        air
+
