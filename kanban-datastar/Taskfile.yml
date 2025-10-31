@@ -72,11 +72,7 @@ tasks:
   css:
     deps: 
       - tailwindcss:install
-    sources:
-      - ./public/input.css
-    generates:
-      - ./public/style.css
-    cmd: "{{.tailwind_bin}} -i ./public/input.css -o ./public/style.css"
+    cmd: "{{.tailwind_bin}} -i ./public/input.css -o ./public/style.css --minify"
 
   templ:
     sources:
