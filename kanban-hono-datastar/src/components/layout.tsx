@@ -12,7 +12,13 @@ export function BasePage({
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="/static/style.css" rel="stylesheet" />
+        {/* Async load full CSS to not block FCP */}
+        <link
+          href="/static/style.css"
+          rel="stylesheet"
+          media="print"
+          onload="this.media='all'; this.onload=null;"
+        />
         <link href="/static/favicon.png" rel="icon" type="image/png" />
         <title>{title}</title>
         <script type="module" src="/static/datastar.js"></script>
