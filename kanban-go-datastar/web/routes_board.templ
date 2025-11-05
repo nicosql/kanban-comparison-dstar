@@ -261,6 +261,33 @@ templ BoardDetails(boardDetails Board, users []User, tags []Tag) {
 			</div>
 		</div>
 	</div>
+	<script>
+        function dropCard(evt, targetListId, root) {
+          evt.preventDefault();
+          evt.currentTarget.classList.remove('ring-4', 'ring-primary', 'ring-offset-2', 'bg-primary/5', 'scale-[1.02]');
+          root.cardId = evt.dataTransfer.getData('cardId');
+          root.sourceListId = evt.dataTransfer.getData('listId');
+          root.targetListId = targetListId;
+
+
+          const dropY = evt.clientY;
+          const cardsInList = evt.currentTarget.querySelectorAll('[role="listitem"]');
+          root.insertPosition = cardsInList.length;
+
+          for (let i = 0; i < cardsInList.length; i++) {
+            const rect = cardsInList[i].getBoundingClientRect();
+            const cardMiddle = rect.top + rect.height / 2;
+            if (dropY < cardMiddle) {
+              root.insertPosition = i;
+              break;
+            }
+          }
+
+          if (root.sourceListId === root.targetListId) {
+              return
+          };
+        }
+    </script>
 }
 
 templ BoardOverview(board Board) {

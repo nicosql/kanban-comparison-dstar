@@ -17,5 +17,8 @@
     "htmx"
   ],
   "author": "JsonBateman",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.16"
+  }
 }

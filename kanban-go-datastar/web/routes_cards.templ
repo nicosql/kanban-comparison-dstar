@@ -16,34 +16,7 @@ templ CardList(list ListWithCards, boardID string, users []User) {
 				data-list-id={ list.ID }
 				data-on:dragover="evt.preventDefault(); evt.currentTarget.classList.add('ring-4', 'ring-primary', 'cursor-grabbing', 'ring-offset-2', 'bg-primary/5', 'scale-[1.02]')"
 				data-on:dragleave="evt.currentTarget.classList.remove('ring-4', 'ring-primary', 'ring-offset-2', 'bg-primary/5', 'scale-[1.02]')"
-				data-on:drop={ fmt.Sprintf(`
-                          evt.preventDefault();
-                          evt.currentTarget.classList.remove('ring-4', 'ring-primary', 'ring-offset-2', 'bg-primary/5', 'scale-[1.02]');
-                          $cardId = evt.dataTransfer.getData('cardId');
-                          $sourceListId = evt.dataTransfer.getData('listId');
-                          $targetListId = '%s';
-
-                          const dropY = evt.clientY;
-                          const cardsInList = evt.currentTarget.querySelectorAll('[role="listitem"]');
-                          $insertPosition = cardsInList.length;
-
-                          for (let i = 0; i < cardsInList.length; i++) {
-                            const rect = cardsInList[i].getBoundingClientRect();
-                            const cardMiddle = rect.top + rect.height / 2;
-                            if (dropY < cardMiddle) {
-                              $insertPosition = i;
-                              break;
-                            }
-                          }
-
-                          if ($sourceListId === $targetListId) {
-                              return
-                          };
-
-                        @put('/board/%s/list/move')
-
-                          `, 
-                   list.ID, boardID) }
+				data-on:drop={ fmt.Sprintf(`dropCard(evt, '%s', $); @put('/board/%s/list/move')`, list.ID, boardID) }
 			>
 				if len(list.Cards) == 0 {
 					<div class="empty-placeholder alert alert-info text-sm">
